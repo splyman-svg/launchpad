@@ -24,7 +24,7 @@ export default function HomePage() {
       {/* A. NAVBAR */}
       <Navbar />
 
-      <main className="flex flex-col w-full h-full pb-20">
+      <main className="w-full pb-20">
         {/* B. HERO */}
         <Hero />
 
