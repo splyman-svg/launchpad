@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { useEffect, useState, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle2, Lock, ArrowRight, Rocket, AlertCircle } from 'lucide-react'
+import { CheckCircle2, Lock, ArrowRight, Rocket, AlertCircle, Sparkles, MessageCircle, Target } from 'lucide-react'
 import type { InterviewAnswers, RoadmapResponse } from '@/types'
 
 const STORAGE_KEY = 'lp_roadmap'
@@ -298,6 +298,45 @@ function RoadmapContent() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Go Pro CTA */}
+            <div className="bg-accent/5 border-2 border-accent/30 rounded-[2rem] p-8 relative overflow-hidden">
+              <div className="text-center">
+                <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                  <Sparkles className="w-7 h-7 text-accent" />
+                </div>
+                <h3 className="text-2xl font-bold text-dark mb-2 font-sans">
+                  Ready to <span className="text-accent font-drama italic">actually</span> do this?
+                </h3>
+                <p className="text-primary/60 font-sans mb-6 max-w-md mx-auto">
+                  Your roadmap is the plan. <strong>Pro</strong> gives you an AI coach, daily tasks, and accountability to make it happen.
+                </p>
+
+                <div className="flex flex-wrap justify-center gap-4 mb-6 text-sm">
+                  <div className="flex items-center gap-2 text-dark/60 font-sans">
+                    <Target className="w-4 h-4 text-accent" />
+                    Daily tasks
+                  </div>
+                  <div className="flex items-center gap-2 text-dark/60 font-sans">
+                    <MessageCircle className="w-4 h-4 text-accent" />
+                    AI coach chat
+                  </div>
+                  <div className="flex items-center gap-2 text-dark/60 font-sans">
+                    <Rocket className="w-4 h-4 text-accent" />
+                    Progress tracking
+                  </div>
+                </div>
+
+                <Link
+                  href="/upgrade"
+                  className="inline-block bg-accent hover:bg-dark text-background font-bold py-4 px-10 rounded-xl text-lg transition-colors font-sans btn relative overflow-hidden"
+                >
+                  <span className="relative z-10">Go Pro &mdash; $29/mo</span>
+                  <span className="hover-layer bg-dark"></span>
+                </Link>
+                <p className="text-primary/40 text-xs font-sans mt-3">Cancel anytime. No commitment.</p>
               </div>
             </div>
 

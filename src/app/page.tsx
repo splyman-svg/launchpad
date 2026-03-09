@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { MousePointer2, Activity, Play, CheckCircle2 } from 'lucide-react'
+import { MousePointer2, Activity, Play, CheckCircle2, Sparkles } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -606,48 +606,69 @@ function Pricing() {
         <h2 className="font-sans font-bold text-4xl md:text-5xl text-dark">Start free. Upgrade when ready.</h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         {/* Free Tier */}
         <div className="pricing-card glass-panel rounded-[2rem] p-8 border border-primary/10 flex flex-col">
-          <h3 className="font-sans font-bold text-2xl text-dark mb-2">Free Preview</h3>
+          <h3 className="font-sans font-bold text-xl text-dark mb-2">Free Preview</h3>
           <div className="flex items-baseline gap-1 mb-6">
-            <span className="font-sans font-bold text-5xl text-dark">$0</span>
+            <span className="font-sans font-bold text-4xl text-dark">$0</span>
           </div>
           <ul className="flex flex-col gap-3 mb-8 flex-grow">
-            {['10-minute AI interview', 'Personalized side hustle match', 'Success probability score', 'Preview of your 30-day plan'].map((item) => (
-              <li key={item} className="flex items-start gap-3 font-sans text-dark/70">
-                <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+            {['10-minute AI interview', 'Personalized hustle match', 'Preview of your plan'].map((item) => (
+              <li key={item} className="flex items-start gap-3 font-sans text-dark/70 text-sm">
+                <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
           </ul>
-          <Link href="/interview" className="w-full bg-primary/10 hover:bg-primary/20 text-primary px-6 py-4 rounded-full font-sans font-semibold text-center transition-colors">
+          <Link href="/interview" className="w-full bg-primary/10 hover:bg-primary/20 text-primary px-6 py-3.5 rounded-full font-sans font-semibold text-center transition-colors text-sm">
             Start Free Interview
           </Link>
         </div>
 
-        {/* Paid Tier */}
-        <div className="pricing-card glass-panel rounded-[2rem] p-8 border-2 border-accent/30 flex flex-col relative overflow-hidden">
-          <div className="absolute top-4 right-4 bg-accent text-background text-xs font-mono font-bold px-3 py-1 rounded-full">
-            MOST POPULAR
-          </div>
-          <h3 className="font-sans font-bold text-2xl text-dark mb-2">Full Blueprint</h3>
+        {/* Blueprint Tier */}
+        <div className="pricing-card glass-panel rounded-[2rem] p-8 border border-primary/10 flex flex-col">
+          <h3 className="font-sans font-bold text-xl text-dark mb-2">Blueprint</h3>
           <div className="flex items-baseline gap-1 mb-6">
-            <span className="font-sans font-bold text-5xl text-dark">$9</span>
+            <span className="font-sans font-bold text-4xl text-dark">$9</span>
             <span className="font-sans text-dark/50 text-lg">.99</span>
+            <span className="text-xs text-primary/40 font-sans ml-1">one-time</span>
           </div>
           <ul className="flex flex-col gap-3 mb-8 flex-grow">
-            {['Everything in Free Preview', 'Complete 30-day action plan', 'Daily milestones & income targets', 'Curated resources & tools list', 'Downloadable PDF roadmap'].map((item) => (
-              <li key={item} className="flex items-start gap-3 font-sans text-dark/70">
-                <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+            {['Everything in Free', 'Full 30-day action plan', 'Income targets & resources', 'Downloadable roadmap'].map((item) => (
+              <li key={item} className="flex items-start gap-3 font-sans text-dark/70 text-sm">
+                <CheckCircle2 className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
           </ul>
-          <Link href="/interview" className="w-full bg-accent hover:bg-dark text-background px-6 py-4 rounded-full font-sans font-bold text-center transition-colors btn">
-            <span className="relative z-10">Get My Full Blueprint</span>
-            <span className="hover-layer bg-dark"></span>
+          <Link href="/interview" className="w-full bg-accent/10 hover:bg-accent/20 text-accent px-6 py-3.5 rounded-full font-sans font-bold text-center transition-colors text-sm">
+            Get Blueprint
           </Link>
+        </div>
+
+        {/* Pro Tier */}
+        <div className="pricing-card bg-dark rounded-[2rem] p-8 text-background flex flex-col relative overflow-hidden">
+          <div className="absolute top-4 right-4 bg-accent text-background text-[10px] font-mono font-bold px-3 py-1 rounded-full inline-flex items-center gap-1">
+            <Sparkles className="w-3 h-3" /> BEST VALUE
+          </div>
+          <h3 className="font-sans font-bold text-xl mb-2">Pro Coach</h3>
+          <div className="flex items-baseline gap-1 mb-6">
+            <span className="font-sans font-bold text-4xl">$29</span>
+            <span className="text-background/50 text-lg font-sans">/mo</span>
+          </div>
+          <ul className="flex flex-col gap-3 mb-8 flex-grow">
+            {['Everything in Blueprint', 'AI coach that knows you', 'Daily tasks broken down', 'Progress tracking & streaks', 'Daily motivation emails', 'Mood check-ins & support'].map((item) => (
+              <li key={item} className="flex items-start gap-3 text-background/80 text-sm font-sans">
+                <CheckCircle2 className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <Link href="/interview" className="w-full bg-accent hover:bg-background hover:text-dark text-background px-6 py-3.5 rounded-full font-sans font-bold text-center transition-all text-sm">
+            Start with Pro
+          </Link>
+          <p className="text-center text-background/30 text-xs font-sans mt-3">Cancel anytime</p>
         </div>
       </div>
     </section>
