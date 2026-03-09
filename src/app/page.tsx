@@ -519,7 +519,7 @@ function Protocol() {
 
       {/* Card 2: The Match */}
       <div ref={card2Ref} className="absolute inset-0 flex items-center justify-center p-6 md:p-16 z-20 w-full max-w-7xl mx-auto h-full origin-top" style={{ transform: 'translateY(100%)' }}>
-        <div className="glass-panel w-full h-[80vh] rounded-[3rem] p-12 flex flex-col md:flex-row items-center justify-between border-primary/20 bg-primary shadow-2xl relative overflow-hidden text-background">
+        <div className="w-full h-[80vh] rounded-[3rem] p-12 flex flex-col md:flex-row items-center justify-between border border-primary/20 bg-primary shadow-2xl relative overflow-hidden text-background">
           <div className="absolute inset-0 opacity-10 object-cover mix-blend-overlay" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2670&auto=format&fit=crop')", backgroundSize: 'cover' }}></div>
           <div className="w-full md:w-1/2 flex flex-col justify-center relative z-10 order-2 md:order-1 mt-12 md:mt-0">
             <div className="font-mono text-xl text-background/60 mb-4">02</div>
