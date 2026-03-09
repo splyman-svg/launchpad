@@ -446,22 +446,25 @@ function Protocol() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=5000',
+          end: '+=6000',
           pin: true,
           scrub: 1,
         }
       })
 
-      // Phase 0→1: Card 1 sits visible (dwell)
-      // Phase 1→2: Card 1 fades out, Card 2 enters
-      tl.to(card1Ref.current, { scale: 0.9, opacity: 0.5, filter: 'blur(10px)', duration: 1 }, 1)
+      // 0→1: Card 1 visible (dwell)
+      // 1→2: Card 1 fades, Card 2 slides in
+      tl.to(card1Ref.current, { scale: 0.9, opacity: 0.3, filter: 'blur(10px)', duration: 1 }, 1)
         .fromTo(card2Ref.current, { y: '100%', opacity: 0 }, { y: '0%', opacity: 1, duration: 1 }, 1)
 
-      // Phase 2→3: Card 2 sits visible (dwell)
-      // Phase 3→4: Card 2 fades out, Card 3 enters
-      tl.to(card1Ref.current, { scale: 0.85, opacity: 0.2, filter: 'blur(15px)', duration: 1 }, 3)
-        .to(card2Ref.current, { scale: 0.9, opacity: 0.5, filter: 'blur(10px)', duration: 1 }, 3)
+      // 2→3: Card 2 visible (dwell)
+      // 3→4: Card 2 fades, Card 3 slides in
+      tl.to(card1Ref.current, { scale: 0.85, opacity: 0, filter: 'blur(15px)', duration: 1 }, 3)
+        .to(card2Ref.current, { scale: 0.9, opacity: 0.3, filter: 'blur(10px)', duration: 1 }, 3)
         .fromTo(card3Ref.current, { y: '100%', opacity: 0 }, { y: '0%', opacity: 1, duration: 1 }, 3)
+
+      // 4→5: Card 3 visible (dwell before unpin)
+      tl.to({}, { duration: 1 }, 4)
 
       gsap.to('.motif-rotate', {
         rotation: 360,
