@@ -416,7 +416,7 @@ function Philosophy() {
         <img
           src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=2574&auto=format&fit=crop"
           alt="Organic texture"
-          className="philosophy-bg w-full h-[120%] object-cover opacity-10 -top-[10%]"
+          className="philosophy-bg absolute w-full h-[120%] object-cover opacity-10 -top-[10%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
       </div>
@@ -446,18 +446,22 @@ function Protocol() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=3000',
+          end: '+=5000',
           pin: true,
           scrub: 1,
         }
       })
 
-      tl.to(card1Ref.current, { scale: 0.9, opacity: 0.5, filter: 'blur(10px)' }, 0)
-        .fromTo(card2Ref.current, { y: '100%', opacity: 0 }, { y: '0%', opacity: 1 }, 0)
+      // Phase 0→1: Card 1 sits visible (dwell)
+      // Phase 1→2: Card 1 fades out, Card 2 enters
+      tl.to(card1Ref.current, { scale: 0.9, opacity: 0.5, filter: 'blur(10px)', duration: 1 }, 1)
+        .fromTo(card2Ref.current, { y: '100%', opacity: 0 }, { y: '0%', opacity: 1, duration: 1 }, 1)
 
-      tl.to(card1Ref.current, { scale: 0.85, opacity: 0.2, filter: 'blur(15px)' }, 1)
-        .to(card2Ref.current, { scale: 0.9, opacity: 0.5, filter: 'blur(10px)' }, 1)
-        .fromTo(card3Ref.current, { y: '100%', opacity: 0 }, { y: '0%', opacity: 1 }, 1)
+      // Phase 2→3: Card 2 sits visible (dwell)
+      // Phase 3→4: Card 2 fades out, Card 3 enters
+      tl.to(card1Ref.current, { scale: 0.85, opacity: 0.2, filter: 'blur(15px)', duration: 1 }, 3)
+        .to(card2Ref.current, { scale: 0.9, opacity: 0.5, filter: 'blur(10px)', duration: 1 }, 3)
+        .fromTo(card3Ref.current, { y: '100%', opacity: 0 }, { y: '0%', opacity: 1, duration: 1 }, 3)
 
       gsap.to('.motif-rotate', {
         rotation: 360,
