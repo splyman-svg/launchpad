@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     console.log(`[Webhook] Payment completed for ${email}, session: ${sessionId}`)
 
     if (email && process.env.RESEND_API_KEY) {
-      const origin = process.env.NEXT_PUBLIC_BASE_URL || 'https://launchpad.app'
+      const origin = process.env.NEXT_PUBLIC_BASE_URL || 'https://hustlup.io'
       const roadmapUrl = `${origin}/roadmap?session_id=${sessionId}&unlocked=true`
 
       // Decode answers from metadata to get hustle name (best effort)

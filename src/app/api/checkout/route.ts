@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'LaunchPad Full Roadmap',
+              name: 'HustlUp Full Roadmap',
               description: 'Your personalized 30-day side hustle action plan, 90-day income target, and top resources.',
             },
             unit_amount: 999, // $9.99

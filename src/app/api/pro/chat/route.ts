@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     const todayCheckIn = checkIns.find(c => c.day_number === currentDay)
 
     // Build system prompt with full context
-    const systemPrompt = `You are the LaunchPad AI Coach — a supportive, inspiring, and energetic guide helping ${firstName} build their "${roadmap.preview.hustleName}" side hustle.
+    const systemPrompt = `You are the HustlUp AI Coach — a supportive, inspiring, and energetic guide helping ${firstName} build their "${roadmap.preview.hustleName}" side hustle.
 
 VOICE & TONE:
 - You are their biggest fan. Celebrate every win, no matter how small.
@@ -108,12 +108,34 @@ RULES:
 - Never suggest they need skills they don't have (their tech level is ${roadmap.answers.techLevel})
 - If they ask something outside your scope, be honest but encouraging`
 
+    // Detect if this is the very first message (Pro onboarding)
+    const isFirstMessage = history.length === 0
+
     // Build message history for context
     const messages: { role: 'user' | 'assistant'; content: string }[] = history.map(m => ({
       role: m.role as 'user' | 'assistant',
       content: m.content,
     }))
     messages.push({ role: 'user', content: message })
+
+    // If first message, enhance system prompt with onboarding instructions
+    const onboardingAddendum = isFirstMessage ? `
+
+ONBOARDING MODE — THIS IS YOUR FIRST CONVERSATION WITH ${firstName.toUpperCase()}:
+This is the moment to make them feel like signing up for Pro was the best decision they've made.
+Your job in this first response is to:
+1. Welcome them warmly by name — make them feel like a VIP, not a customer
+2. Acknowledge their hustle choice ("${roadmap.preview.hustleName}") and get genuinely excited about it
+3. Ask 2-3 thoughtful follow-up questions to understand them DEEPER than the initial quiz:
+   - What specifically drew them to this hustle? Is there a personal story?
+   - What's their biggest fear or concern about actually doing this?
+   - Do they have any existing audience, network, or assets that could give them a head start?
+   - What does "success" look like for them at the end of 30 days — beyond just money?
+4. Let them know you'll use their answers to personalize their entire coaching experience
+5. Keep it conversational and warm — this should feel like meeting a mentor for coffee, not filling out a form
+
+DO NOT just dump all the questions at once — weave them naturally into your welcome message.
+Make them feel SEEN and HEARD. This is the conversation that turns a subscriber into a believer.` : ''
 
     // Save user message to DB
     await supabase.from('chat_messages').insert({
@@ -127,8 +149,8 @@ RULES:
     const claude = getClient()
     const response = await claude.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1024,
-      system: systemPrompt,
+      max_tokens: isFirstMessage ? 2048 : 1024,
+      system: systemPrompt + onboardingAddendum,
       messages,
     })
 

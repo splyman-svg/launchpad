@@ -5,18 +5,18 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'LaunchPad — Find Your Perfect Side Hustle',
-  description: 'Answer 10 questions and get a personalized AI-powered side hustle roadmap in minutes.',
+  title: 'HustlUp — Find Your Perfect Side Hustle',
+  description: 'Answer 10 questions and get a personalized AI-powered side hustle coach in minutes.',
   openGraph: {
-    title: 'LaunchPad — Find Your Perfect Side Hustle',
-    description: 'Answer 10 questions and get a personalized AI-powered side hustle roadmap in minutes.',
+    title: 'HustlUp — Find Your Perfect Side Hustle',
+    description: 'Answer 10 questions and get a personalized AI-powered side hustle coach in minutes.',
     type: 'website',
-    siteName: 'LaunchPad',
+    siteName: 'HustlUp',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LaunchPad — Find Your Perfect Side Hustle',
-    description: 'Answer 10 questions and get a personalized AI-powered side hustle roadmap in minutes.',
+    title: 'HustlUp — Find Your Perfect Side Hustle',
+    description: 'Answer 10 questions and get a personalized AI-powered side hustle coach in minutes.',
   },
 }
 

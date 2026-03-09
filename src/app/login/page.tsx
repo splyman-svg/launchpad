@@ -73,7 +73,7 @@ function LoginContent() {
       <nav className="border-b border-primary/10 bg-background/80 backdrop-blur-md px-6 py-4">
         <div className="max-w-xl mx-auto flex items-center justify-between">
           <Link href="/" className="text-lg font-bold text-dark tracking-tighter font-sans">
-            LaunchPad
+            HustlUp
           </Link>
           <Link href="/" className="flex items-center gap-1 text-sm text-primary/50 hover:text-accent transition-colors font-sans">
             <ArrowLeft className="w-4 h-4" />

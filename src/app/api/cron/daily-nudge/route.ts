@@ -42,8 +42,8 @@ export async function GET(req: NextRequest) {
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
-  const from = process.env.RESEND_FROM_EMAIL || 'LaunchPad <noreply@launchpad.app>'
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://launchpad-one-ruddy.vercel.app'
+  const from = process.env.RESEND_FROM_EMAIL || 'HustlUp <noreply@hustlup.io>'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://hustlup.io'
   const supabase = createAdminClient()
 
   try {
@@ -134,7 +134,7 @@ ${getMotivationalLine(dayNumber)}
 → Open your dashboard: ${baseUrl}/dashboard
 
 You've got this!
-Your LaunchPad AI Coach`
+Your HustlUp AI Coach`
 
         await resend.emails.send({
           from,

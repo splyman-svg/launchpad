@@ -7,7 +7,7 @@ function getResend() {
   return new Resend(process.env.RESEND_API_KEY)
 }
 
-const FROM = process.env.RESEND_FROM_EMAIL || 'LaunchPad <noreply@launchpad.app>'
+const FROM = process.env.RESEND_FROM_EMAIL || 'HustlUp <noreply@hustlup.io>'
 
 const ACCOUNTABILITY_EMAILS: { day: number; subject: string; body: string }[] = [
   {
@@ -15,7 +15,7 @@ const ACCOUNTABILITY_EMAILS: { day: number; subject: string; body: string }[] = 
     subject: 'Day 1 check-in: did you complete Step 1 of your roadmap?',
     body: `Hey,
 
-Yesterday you unlocked your LaunchPad roadmap — that was the first step.
+Yesterday you unlocked your HustlUp roadmap — that was the first step.
 
 Today is about action. Your roadmap starts with Day 1–3. Did you complete it?
 
@@ -23,7 +23,7 @@ If you haven't started yet, now is the time. The hardest part is starting.
 
 Open your roadmap and do one thing today.
 
-— LaunchPad`,
+— HustlUp`,
   },
   {
     day: 2,
@@ -36,7 +36,7 @@ A quick reminder of why you started: you're building toward a real income goal. 
 
 What's your one action for today?
 
-— LaunchPad`,
+— HustlUp`,
   },
   {
     day: 3,
@@ -51,7 +51,7 @@ Small, consistent actions beat bursts of effort every time.
 
 You've got this.
 
-— LaunchPad`,
+— HustlUp`,
   },
   {
     day: 4,
@@ -64,7 +64,7 @@ The ones who succeed share one trait: they keep going when it gets boring. Not w
 
 Your roadmap is your edge. Trust the plan.
 
-— LaunchPad`,
+— HustlUp`,
   },
   {
     day: 5,
@@ -80,7 +80,7 @@ Take 2 minutes today to check in:
 
 Honest reflection is how you accelerate.
 
-— LaunchPad`,
+— HustlUp`,
   },
   {
     day: 6,
@@ -95,7 +95,7 @@ You've been at this for 6 days. That's 6 days more than most people who say "I s
 
 Keep going. The milestone is real.
 
-— LaunchPad`,
+— HustlUp`,
   },
 ]
 
@@ -113,7 +113,7 @@ export async function sendPurchaseConfirmation({
   await resend.emails.send({
     from: FROM,
     to: email,
-    subject: 'Your LaunchPad Roadmap is Ready 🚀',
+    subject: 'Your HustlUp Roadmap is Ready 🚀',
     text: `Hey,
 
 Your side hustle roadmap is ready.
@@ -125,7 +125,7 @@ ${roadmapUrl}
 
 Start with Step 1 in your 30-day action plan today. The sooner you begin, the sooner you see results.
 
-— LaunchPad`,
+— HustlUp`,
   })
 }
 

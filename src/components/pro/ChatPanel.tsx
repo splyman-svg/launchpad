@@ -30,12 +30,20 @@ export default function ChatPanel({ messages, onSend, isLoading, firstName, hust
     await onSend(msg)
   }
 
-  const QUICK_PROMPTS = [
+  const ONBOARDING_PROMPTS = [
+    "Hey coach, I'm ready to get started! 🚀",
+    "Tell me what Pro is all about",
+    "I'm excited but nervous — help me out!",
+  ]
+
+  const RETURNING_PROMPTS = [
     "What should I focus on today?",
     "I'm feeling stuck, help me out",
     "Give me a pep talk!",
     "How am I doing overall?",
   ]
+
+  const QUICK_PROMPTS = messages.length === 0 ? ONBOARDING_PROMPTS : RETURNING_PROMPTS
 
   return (
     <div className="glass-panel rounded-2xl overflow-hidden">
@@ -64,11 +72,11 @@ export default function ChatPanel({ messages, onSend, isLoading, firstName, hust
             {messages.length === 0 && (
               <div className="text-center py-8">
                 <Sparkles className="w-8 h-8 text-accent/30 mx-auto mb-3" />
-                <p className="text-sm text-dark/60 font-sans mb-1">
-                  Hey {firstName}! I&apos;m your AI coach.
+                <p className="text-sm font-bold text-dark font-sans mb-2">
+                  Welcome to Pro, {firstName}! 🎉
                 </p>
-                <p className="text-xs text-primary/40 font-sans">
-                  Ask me anything about your {hustleName} journey!
+                <p className="text-xs text-primary/50 font-sans max-w-xs mx-auto leading-relaxed">
+                  I&apos;m your personal AI coach for {hustleName}. Let&apos;s start with a quick chat so I can really understand what you&apos;re going for.
                 </p>
               </div>
             )}

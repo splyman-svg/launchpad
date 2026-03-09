@@ -60,7 +60,7 @@ function Navbar() {
 
   return (
     <header className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-in-out w-[90%] max-w-5xl rounded-[2rem] px-8 py-4 flex items-center justify-between ${scrolled ? 'glass-panel text-primary border-primary/20' : 'bg-transparent text-background drop-shadow-md'}`}>
-      <div className="font-sans font-bold text-2xl tracking-tighter cursor-pointer">LaunchPad</div>
+      <div className="font-sans font-bold text-2xl tracking-tighter cursor-pointer">HustlUp</div>
       <nav className="hidden md:flex gap-8 items-center font-sans font-semibold text-sm tracking-wide">
         <a href="#how-it-works" className="hover:text-accent transition-colors">See how it works</a>
         <a href="#pricing" className="hover:text-accent transition-colors">Pricing</a>
@@ -606,69 +606,51 @@ function Pricing() {
         <h2 className="font-sans font-bold text-4xl md:text-5xl text-dark">Start free. Upgrade when ready.</h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {/* Free Tier */}
         <div className="pricing-card glass-panel rounded-[2rem] p-8 border border-primary/10 flex flex-col">
-          <h3 className="font-sans font-bold text-xl text-dark mb-2">Free Preview</h3>
+          <h3 className="font-sans font-bold text-xl text-dark mb-2">Free Roadmap</h3>
           <div className="flex items-baseline gap-1 mb-6">
             <span className="font-sans font-bold text-4xl text-dark">$0</span>
+            <span className="text-xs text-primary/40 font-sans ml-1">forever</span>
           </div>
+          <p className="font-sans text-dark/60 text-sm mb-6">Everything you need to find your perfect side hustle.</p>
           <ul className="flex flex-col gap-3 mb-8 flex-grow">
-            {['10-minute AI interview', 'Personalized hustle match', 'Preview of your plan'].map((item) => (
-              <li key={item} className="flex items-start gap-3 font-sans text-dark/70 text-sm">
-                <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                {item}
-              </li>
-            ))}
-          </ul>
-          <Link href="/interview" className="w-full bg-primary/10 hover:bg-primary/20 text-primary px-6 py-3.5 rounded-full font-sans font-semibold text-center transition-colors text-sm">
-            Start Free Interview
-          </Link>
-        </div>
-
-        {/* Blueprint Tier */}
-        <div className="pricing-card glass-panel rounded-[2rem] p-8 border border-primary/10 flex flex-col">
-          <h3 className="font-sans font-bold text-xl text-dark mb-2">Blueprint</h3>
-          <div className="flex items-baseline gap-1 mb-6">
-            <span className="font-sans font-bold text-4xl text-dark">$9</span>
-            <span className="font-sans text-dark/50 text-lg">.99</span>
-            <span className="text-xs text-primary/40 font-sans ml-1">one-time</span>
-          </div>
-          <ul className="flex flex-col gap-3 mb-8 flex-grow">
-            {['Everything in Free', 'Full 30-day action plan', 'Income targets & resources', 'Downloadable roadmap'].map((item) => (
+            {['10-minute AI interview', 'Personalized hustle match', 'Full 30-day action plan', '90-day income target', 'Top 3 curated resources'].map((item) => (
               <li key={item} className="flex items-start gap-3 font-sans text-dark/70 text-sm">
                 <CheckCircle2 className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
           </ul>
-          <Link href="/interview" className="w-full bg-accent/10 hover:bg-accent/20 text-accent px-6 py-3.5 rounded-full font-sans font-bold text-center transition-colors text-sm">
-            Get Blueprint
+          <Link href="/interview" className="w-full bg-primary/10 hover:bg-primary/20 text-primary px-6 py-3.5 rounded-full font-sans font-semibold text-center transition-colors text-sm">
+            Get My Free Roadmap
           </Link>
         </div>
 
         {/* Pro Tier */}
         <div className="pricing-card bg-dark rounded-[2rem] p-8 text-background flex flex-col relative overflow-hidden">
           <div className="absolute top-4 right-4 bg-accent text-background text-[10px] font-mono font-bold px-3 py-1 rounded-full inline-flex items-center gap-1">
-            <Sparkles className="w-3 h-3" /> BEST VALUE
+            <Sparkles className="w-3 h-3" /> POPULAR
           </div>
           <h3 className="font-sans font-bold text-xl mb-2">Pro Coach</h3>
           <div className="flex items-baseline gap-1 mb-6">
             <span className="font-sans font-bold text-4xl">$29</span>
             <span className="text-background/50 text-lg font-sans">/mo</span>
           </div>
+          <p className="font-sans text-background/60 text-sm mb-6">Your AI coach walks you through the plan — every single day.</p>
           <ul className="flex flex-col gap-3 mb-8 flex-grow">
-            {['Everything in Blueprint', 'AI coach that knows you', 'Daily tasks broken down', 'Progress tracking & streaks', 'Daily motivation emails', 'Mood check-ins & support'].map((item) => (
+            {['Everything in Free', 'Deep-dive onboarding session', 'AI coach that knows your hustle', 'Daily tasks broken down for you', 'Progress tracking & streaks', 'Daily motivation emails', 'Mood check-ins & adaptive support'].map((item) => (
               <li key={item} className="flex items-start gap-3 text-background/80 text-sm font-sans">
                 <CheckCircle2 className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
           </ul>
-          <Link href="/interview" className="w-full bg-accent hover:bg-background hover:text-dark text-background px-6 py-3.5 rounded-full font-sans font-bold text-center transition-all text-sm">
-            Start with Pro
+          <Link href="/upgrade" className="w-full bg-accent hover:bg-background hover:text-dark text-background px-6 py-3.5 rounded-full font-sans font-bold text-center transition-all text-sm">
+            Go Pro &mdash; $29/mo
           </Link>
-          <p className="text-center text-background/30 text-xs font-sans mt-3">Cancel anytime</p>
+          <p className="text-center text-background/30 text-xs font-sans mt-3">Cancel anytime. No commitment.</p>
         </div>
       </div>
     </section>
@@ -680,7 +662,7 @@ function Footer() {
     <footer className="bg-dark text-background rounded-t-[4rem] px-12 py-20 relative overflow-hidden">
       <div className="container mx-auto max-w-7xl relative z-10 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-2">
-          <h2 className="text-3xl font-sans font-bold tracking-tight mb-4">LaunchPad</h2>
+          <h2 className="text-3xl font-sans font-bold tracking-tight mb-4">HustlUp</h2>
           <p className="text-background/60 text-lg max-w-sm mb-8 font-sans">
             Find your perfect side hustle in 10 minutes with an AI-powered interview.
           </p>

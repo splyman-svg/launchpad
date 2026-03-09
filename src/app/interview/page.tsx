@@ -141,7 +141,7 @@ export default function InterviewPage() {
       <div className="px-6 py-5 border-b border-primary/10 bg-background/80 backdrop-blur-md">
         <div className="max-w-xl mx-auto flex items-center gap-4">
           <Link href="/" className="text-lg font-bold text-dark tracking-tighter font-sans">
-            LaunchPad
+            HustlUp
           </Link>
           <div className="flex-1">
             <div className="flex justify-between text-xs text-primary/50 mb-1 font-mono">

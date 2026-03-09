@@ -69,7 +69,7 @@ export default function UpgradePage() {
       <nav className="border-b border-primary/10 bg-background/80 backdrop-blur-md px-6 py-4 sticky top-0 z-40">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="text-lg font-bold text-dark tracking-tighter font-sans">
-            LaunchPad
+            HustlUp
           </Link>
           <Link href="/login" className="text-sm text-accent hover:text-dark transition-colors font-sans font-medium">
             Sign in
@@ -91,18 +91,18 @@ export default function UpgradePage() {
           </p>
         </div>
 
-        {/* Comparison */}
+        {/* What you get free vs Pro */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {/* Free / One-time */}
+          {/* Free */}
           <div className="glass-panel rounded-2xl p-6">
-            <h3 className="font-bold text-dark mb-1 font-sans">Blueprint</h3>
+            <h3 className="font-bold text-dark mb-1 font-sans">Free Roadmap</h3>
             <div className="flex items-baseline gap-1 mb-4">
-              <span className="text-3xl font-bold text-dark font-sans">$9</span>
-              <span className="text-dark/50 font-sans">.99</span>
-              <span className="text-sm text-primary/40 font-sans ml-1">one-time</span>
+              <span className="text-3xl font-bold text-dark font-sans">$0</span>
+              <span className="text-sm text-primary/40 font-sans ml-1">forever</span>
             </div>
+            <p className="text-sm text-dark/50 font-sans mb-4">You already have this!</p>
             <ul className="space-y-3">
-              {['AI-generated side hustle roadmap', '30-day action plan', '90-day income target', 'Top 3 free resources'].map((item) => (
+              {['AI-generated side hustle match', 'Full 30-day action plan', '90-day income target', 'Top 3 curated resources'].map((item) => (
                 <li key={item} className="flex gap-2 text-sm text-dark/60 font-sans">
                   <CheckCircle2 className="w-4 h-4 text-primary/30 mt-0.5 flex-shrink-0" />
                   {item}
@@ -125,7 +125,8 @@ export default function UpgradePage() {
             </div>
             <ul className="space-y-3">
               {[
-                'Everything in Blueprint',
+                'Everything in Free',
+                'Deep-dive onboarding with your AI coach',
                 'AI coach that knows your hustle',
                 'Daily tasks broken down for you',
                 'Progress tracking & streaks',
@@ -143,7 +144,7 @@ export default function UpgradePage() {
               disabled={loading}
               className="w-full mt-6 bg-accent hover:bg-background hover:text-dark disabled:opacity-50 text-background font-bold py-4 px-8 rounded-xl text-lg transition-all font-sans"
             >
-              {loading ? 'Setting up checkout...' : 'Start Pro — $29/mo'}
+              {loading ? 'Setting up checkout...' : 'Go Pro — $29/mo'}
             </button>
             <p className="text-center text-background/40 text-xs font-sans mt-3">
               Cancel anytime. No commitment.
