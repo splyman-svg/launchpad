@@ -9,6 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        background: '#F2F0E9', // Cream
+        primary: '#2E4036',    // Moss
+        accent: '#CC5833',     // Clay
+        dark: '#1A1A1A',       // Charcoal
         brand: {
           50: '#f0fdf4',
           100: '#dcfce7',
@@ -18,6 +22,16 @@ const config: Config = {
           900: '#14532d',
         },
       },
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', '"Outfit"', 'sans-serif'],
+        drama: ['"Cormorant Garamond"', 'serif'],
+        mono: ['"IBM Plex Mono"', 'monospace'],
+      },
+      borderRadius: {
+        '2rem': '2rem',
+        '3rem': '3rem',
+        '4rem': '4rem',
+      }
     },
   },
   plugins: [],

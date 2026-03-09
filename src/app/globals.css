@@ -1,3 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=IBM+Plex+Mono&family=Outfit:wght@400;600&family=Plus+Jakarta+Sans:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-dark font-sans antialiased overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .clip-text {
+    @apply bg-clip-text text-transparent;
+  }
+
+  .glass-panel {
+    @apply bg-background/60 backdrop-blur-xl border border-primary/10 shadow-lg;
+  }
+}
+
+/* Noise overlay using SVG turbulence */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+}
+
+/* Global button styles for magnetic feel */
+button, .btn {
+  @apply relative overflow-hidden transition-all duration-300;
+}
+
+button:hover, .btn:hover {
+  @apply scale-105;
+  transform: scale(1.03);
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+button .hover-layer, .btn .hover-layer {
+  @apply absolute inset-0 -translate-x-[101%] transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)];
+}
+
+button:hover .hover-layer, .btn:hover .hover-layer {
+  @apply translate-x-0;
+}
+
+/* Base interactive elements */
+a {
+  @apply transition-transform duration-300 hover:-translate-y-[1px];
+}
+
+/* GSAP ScrollTrigger specific hiding before animation */
+.reveal-text, .reveal-element {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F2F0E9;
+}
+::-webkit-scrollbar-thumb {
+  background: #2E4036;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1A1A1A;
+}
