@@ -104,24 +104,24 @@ function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2670&auto=format&fit=crop"
-          alt="Dark organic forest"
-          className="w-full h-full object-cover opacity-60 scale-105"
+          src="/hero-bg.jpg"
+          alt="Tropical sunset with palm trees"
+          className="w-full h-full object-cover opacity-50 scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-dark/40"></div>
       </div>
 
       <div className="relative z-10 max-w-5xl flex flex-col gap-6 w-full lg:w-2/3">
-        <h1 className="flex flex-col gap-1 text-background">
+        <h1 className="flex flex-col gap-1 text-background" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}>
           <span className="hero-text translate-y-10 opacity-0 font-sans font-bold text-5xl md:text-6xl lg:text-7xl tracking-tighter">
             Potential is the
           </span>
-          <span className="hero-text translate-y-10 opacity-0 font-drama text-7xl md:text-8xl lg:text-[8rem] leading-[0.85] text-accent mt-2 pr-4 md:pr-0 origin-left">
+          <span className="hero-text translate-y-10 opacity-0 font-drama text-7xl md:text-8xl lg:text-[8rem] leading-[0.85] text-accent mt-2 pr-4 md:pr-0 origin-left" style={{ textShadow: '0 2px 25px rgba(0,0,0,0.6)' }}>
             Blueprint.
           </span>
         </h1>
 
-        <p className="hero-text translate-y-10 opacity-0 text-background/80 font-sans text-xl md:text-2xl max-w-2xl leading-relaxed mt-4 font-light">
+        <p className="hero-text translate-y-10 opacity-0 text-background font-sans text-xl md:text-2xl max-w-2xl leading-relaxed mt-4 font-light" style={{ textShadow: '0 1px 10px rgba(0,0,0,0.4)' }}>
           Find your perfect side hustle in 10 minutes with an AI-powered interview and personalized 30-day roadmap.
         </p>
 
@@ -248,14 +248,14 @@ function TelemetryTypewriter() {
   }, [])
 
   return (
-    <div className="feature-card glass-panel rounded-[2rem] p-8 flex flex-col h-[400px] border border-primary/10 shadow-xl bg-dark text-background relative overflow-hidden group">
+    <div className="feature-card rounded-[2rem] p-8 flex flex-col h-[400px] border border-primary/10 shadow-xl bg-dark text-background relative overflow-hidden group">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-50"></div>
 
       <div className="relative z-10 flex flex-col h-full">
         <div className="flex justify-between items-center mb-8 pb-4 border-b border-background/10">
           <div>
             <h3 className="font-sans font-bold text-2xl mb-1">Instant Match</h3>
-            <p className="font-sans text-background/60 text-sm">Highest chance of success.</p>
+            <p className="font-sans text-background/80 text-sm">Highest chance of success.</p>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
@@ -263,7 +263,7 @@ function TelemetryTypewriter() {
           </div>
         </div>
 
-        <div className="font-mono text-sm leading-relaxed text-background/80 whitespace-pre-wrap flex-grow">
+        <div className="font-mono text-sm leading-relaxed text-background/90 whitespace-pre-wrap flex-grow">
           {text}
           <span className="inline-block w-2 h-4 bg-accent ml-1 animate-pulse align-middle"></span>
         </div>
