@@ -446,7 +446,7 @@ function Protocol() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=6000',
+          end: '+=4000',
           pin: true,
           scrub: 1,
         }
@@ -498,15 +498,15 @@ function Protocol() {
 
       {/* Card 1: The Interview */}
       <div ref={card1Ref} className="absolute inset-0 flex items-center justify-center p-6 md:p-16 z-10 w-full max-w-7xl mx-auto h-full origin-top">
-        <div className="glass-panel w-full h-[80vh] rounded-[3rem] p-12 flex flex-col md:flex-row items-center justify-between border-primary/20 bg-background shadow-2xl relative overflow-hidden">
+        <div className="glass-panel w-full h-[80vh] rounded-2xl md:rounded-[3rem] p-6 md:p-12 flex flex-col md:flex-row items-center justify-between border-primary/20 bg-background shadow-2xl relative overflow-hidden">
           <div className="w-full md:w-1/2 flex flex-col justify-center z-10">
-            <div className="font-mono text-xl text-primary/60 mb-4">01</div>
-            <h2 className="font-sans font-bold text-5xl md:text-6xl text-dark mb-6">The Interview</h2>
-            <p className="font-sans text-xl text-dark/70 max-w-md leading-relaxed">
+            <div className="font-mono text-lg md:text-xl text-primary/60 mb-3 md:mb-4">01</div>
+            <h2 className="font-sans font-bold text-4xl md:text-6xl text-dark mb-4 md:mb-6">The Interview</h2>
+            <p className="font-sans text-lg md:text-xl text-dark/70 max-w-md leading-relaxed">
               We don&apos;t do generic quizzes. Our AI conducts a deep, 10-minute analysis of your unique skills, schedule constraints, and personal goals.
             </p>
           </div>
-          <div className="w-full md:w-1/2 h-full flex items-center justify-center relative mt-12 md:mt-0 z-0">
+          <div className="hidden md:flex w-full md:w-1/2 h-full items-center justify-center relative mt-8 md:mt-0 z-0">
             <div className="relative w-[300px] h-[300px] opacity-80">
               <div className="motif-rotate absolute inset-0 border-[1px] border-primary/30 rounded-full w-full h-full border-dashed"></div>
               <div className="motif-rotate absolute top-10 left-10 border-[2px] border-accent/40 rounded-full w-[220px] h-[220px]" style={{ animationDirection: 'reverse', animationDuration: '15s' }}></div>
@@ -519,17 +519,17 @@ function Protocol() {
 
       {/* Card 2: The Match */}
       <div ref={card2Ref} className="absolute inset-0 flex items-center justify-center p-6 md:p-16 z-20 w-full max-w-7xl mx-auto h-full origin-top" style={{ transform: 'translateY(100%)' }}>
-        <div className="w-full h-[80vh] rounded-[3rem] p-12 flex flex-col md:flex-row items-center justify-between border border-primary/20 bg-primary shadow-2xl relative overflow-hidden text-background">
+        <div className="w-full h-[80vh] rounded-2xl md:rounded-[3rem] p-6 md:p-12 flex flex-col md:flex-row items-center justify-between border border-primary/20 bg-primary shadow-2xl relative overflow-hidden text-background">
           <div className="absolute inset-0 opacity-10 object-cover mix-blend-overlay" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2670&auto=format&fit=crop')", backgroundSize: 'cover' }}></div>
-          <div className="w-full md:w-1/2 flex flex-col justify-center relative z-10 order-2 md:order-1 mt-12 md:mt-0">
-            <div className="font-mono text-xl text-background/60 mb-4">02</div>
-            <h2 className="font-sans font-bold text-5xl md:text-6xl mb-6">The Match</h2>
-            <p className="font-sans text-xl text-background/80 max-w-md leading-relaxed">
+          <div className="w-full md:w-1/2 flex flex-col justify-center relative z-10 md:order-1 mt-8 md:mt-0">
+            <div className="font-mono text-lg md:text-xl text-background/60 mb-3 md:mb-4">02</div>
+            <h2 className="font-sans font-bold text-4xl md:text-6xl mb-4 md:mb-6">The Match</h2>
+            <p className="font-sans text-lg md:text-xl text-background/80 max-w-md leading-relaxed">
               Your profile is correlated against our database of viable income models. We present the single side hustle with your highest probability of success.
             </p>
           </div>
-          <div className="w-full md:w-1/2 h-full flex items-center justify-center relative z-10 order-1 md:order-2">
-            <div className="relative w-[80%] h-[300px] border border-background/20 rounded-xl overflow-hidden bg-dark/50 backdrop-blur-md">
+          <div className="hidden md:flex w-full md:w-1/2 h-full items-center justify-center relative z-10 md:order-2">
+            <div className="relative w-[80%] h-[180px] md:h-[300px] border border-background/20 rounded-xl overflow-hidden bg-dark/50 backdrop-blur-md">
               <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(242, 240, 233, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(242, 240, 233, 0.1) 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
               <div className="scanner-line absolute top-0 left-0 w-full h-[2px] bg-accent shadow-[0_0_15px_3px_#CC5833]"></div>
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background/10 backdrop-blur-xl px-6 py-3 rounded-full border border-background/20 font-mono text-sm shadow-xl flex items-center gap-3">
@@ -543,11 +543,11 @@ function Protocol() {
 
       {/* Card 3: The Plan */}
       <div ref={card3Ref} className="absolute inset-0 flex items-center justify-center p-6 md:p-16 z-30 w-full max-w-7xl mx-auto h-full" style={{ transform: 'translateY(100%)' }}>
-        <div className="glass-panel w-full h-[80vh] rounded-[3rem] p-12 flex flex-col md:flex-row items-center justify-between border-accent/30 bg-background shadow-2xl relative overflow-hidden">
+        <div className="glass-panel w-full h-[80vh] rounded-2xl md:rounded-[3rem] p-6 md:p-12 flex flex-col md:flex-row items-center justify-between border-accent/30 bg-background shadow-2xl relative overflow-hidden">
           <div className="w-full md:w-1/2 flex flex-col justify-center relative z-10">
-            <div className="font-mono text-xl text-accent mb-4">03</div>
-            <h2 className="font-sans font-bold text-5xl md:text-6xl text-dark mb-6">The Plan</h2>
-            <p className="font-sans text-xl text-dark/70 max-w-md leading-relaxed mb-8">
+            <div className="font-mono text-lg md:text-xl text-accent mb-3 md:mb-4">03</div>
+            <h2 className="font-sans font-bold text-4xl md:text-6xl text-dark mb-4 md:mb-6">The Plan</h2>
+            <p className="font-sans text-lg md:text-xl text-dark/70 max-w-md leading-relaxed mb-6 md:mb-8">
               Leave ambiguity behind. You receive a structured 30-day action plan with specific income targets, milestones, and curated resources to begin execution immediately.
             </p>
             <Link href="/interview" className="w-fit bg-primary hover:bg-dark text-background px-8 py-4 rounded-full font-sans font-semibold shadow-lg transition-colors btn">
@@ -555,7 +555,7 @@ function Protocol() {
               <span className="hover-layer bg-accent"></span>
             </Link>
           </div>
-          <div className="w-full md:w-1/2 h-full flex items-center justify-center relative z-10 mt-12 md:mt-0">
+          <div className="hidden md:flex w-full md:w-1/2 h-full items-center justify-center relative z-10">
             <div className="relative w-full max-w-[400px]">
               <svg viewBox="0 0 400 150" className="w-full drop-shadow-[0_0_8px_rgba(204,88,51,0.5)]">
                 <path
