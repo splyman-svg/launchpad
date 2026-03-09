@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { useEffect, useState, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { CheckCircle2, Lock, ArrowRight, Rocket, AlertCircle } from 'lucide-react'
 import type { InterviewAnswers, RoadmapResponse } from '@/types'
 
 const STORAGE_KEY = 'lp_roadmap'
@@ -117,19 +118,21 @@ function RoadmapContent() {
 
   if (state === 'loading') {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center px-6">
+      <main className="min-h-screen bg-dark flex items-center justify-center px-6">
         <div className="text-center max-w-sm">
-          <div className="text-5xl mb-6 animate-bounce">🚀</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Building your roadmap…</h2>
-          <p className="text-gray-500">
-            Claude AI is analyzing your answers and crafting your personalized side hustle plan.
+          <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-accent/20 flex items-center justify-center">
+            <Rocket className="w-8 h-8 text-accent animate-bounce" />
+          </div>
+          <h2 className="text-2xl font-bold text-background mb-3 font-sans">Building your roadmap&hellip;</h2>
+          <p className="text-background/60 font-sans">
+            Our AI is analyzing your answers and crafting your personalized side hustle plan.
             This takes about 10 seconds.
           </p>
-          <div className="mt-8 flex justify-center gap-1">
+          <div className="mt-8 flex justify-center gap-2">
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
-                className="w-2 h-2 bg-green-500 rounded-full animate-bounce"
+                className="w-2.5 h-2.5 bg-accent rounded-full animate-bounce"
                 style={{ animationDelay: `${i * 0.15}s` }}
               />
             ))}
@@ -141,14 +144,16 @@ function RoadmapContent() {
 
   if (state === 'error') {
     return (
-      <main className="min-h-screen bg-white flex items-center justify-center px-6">
+      <main className="min-h-screen bg-background flex items-center justify-center px-6">
         <div className="text-center max-w-sm">
-          <div className="text-5xl mb-6">😕</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Something went wrong</h2>
-          <p className="text-gray-500 mb-6">{errorMsg}</p>
+          <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
+            <AlertCircle className="w-8 h-8 text-accent" />
+          </div>
+          <h2 className="text-2xl font-bold text-dark mb-3 font-sans">Something went wrong</h2>
+          <p className="text-primary/60 mb-6 font-sans">{errorMsg}</p>
           <Link
             href="/interview"
-            className="inline-block bg-green-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-green-700 transition-colors"
+            className="inline-block bg-accent text-background font-bold px-8 py-3 rounded-xl hover:bg-dark transition-colors font-sans"
           >
             Try again
           </Link>
@@ -162,14 +167,14 @@ function RoadmapContent() {
   const { preview, full } = roadmap
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-50 to-white">
+    <main className="min-h-screen bg-background">
       {/* Nav */}
-      <nav className="border-b border-gray-100 bg-white px-6 py-4">
+      <nav className="border-b border-primary/10 bg-background/80 backdrop-blur-md px-6 py-4 sticky top-0 z-40">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <Link href="/" className="text-lg font-bold text-gray-900">
-            Launch<span className="text-green-600">Pad</span>
+          <Link href="/" className="text-lg font-bold text-dark tracking-tighter font-sans">
+            LaunchPad
           </Link>
-          <Link href="/interview" className="text-sm text-green-600 hover:underline">
+          <Link href="/interview" className="text-sm text-accent hover:text-dark transition-colors font-sans font-medium">
             Retake assessment
           </Link>
         </div>
@@ -178,27 +183,30 @@ function RoadmapContent() {
       <div className="max-w-2xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="text-4xl mb-4">🎯</div>
-          <h1 className="text-3xl font-extrabold text-gray-900 mb-2">
-            Your Side Hustle: <span className="text-green-600">{preview.hustleName}</span>
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+            <CheckCircle2 className="w-8 h-8 text-accent" />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-dark mb-2 font-sans">
+            Your Side Hustle:{' '}
+            <span className="text-accent font-drama italic text-4xl md:text-5xl">{preview.hustleName}</span>
           </h1>
-          <p className="text-gray-500">{preview.hustleDescription}</p>
+          <p className="text-primary/60 font-sans mt-3">{preview.hustleDescription}</p>
         </div>
 
         {/* Why it fits */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
-          <h2 className="font-bold text-gray-900 mb-3">Why this fits you</h2>
-          <p className="text-gray-600 leading-relaxed">{preview.whyItFits}</p>
+        <div className="glass-panel rounded-[2rem] p-6 mb-6">
+          <h2 className="font-bold text-dark mb-3 font-sans">Why this fits you</h2>
+          <p className="text-dark/70 leading-relaxed font-sans">{preview.whyItFits}</p>
         </div>
 
         {/* Preview bullets */}
-        <div className="bg-green-50 border border-green-200 rounded-2xl p-6 mb-6">
-          <h2 className="font-bold text-gray-900 mb-4">Your roadmap preview</h2>
+        <div className="bg-primary/5 border border-primary/10 rounded-[2rem] p-6 mb-6">
+          <h2 className="font-bold text-dark mb-4 font-sans">Your roadmap preview</h2>
           <ul className="space-y-3">
             {preview.bulletSummary.map((bullet, i) => (
               <li key={i} className="flex gap-3">
-                <span className="text-green-600 font-bold mt-0.5">✓</span>
-                <span className="text-gray-700">{bullet}</span>
+                <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                <span className="text-dark/70 font-sans">{bullet}</span>
               </li>
             ))}
           </ul>
@@ -208,12 +216,12 @@ function RoadmapContent() {
         {!unlocked ? (
           <div className="relative">
             {/* Blurred teaser */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-4 blur-sm select-none pointer-events-none">
-              <h2 className="font-bold text-gray-900 mb-4">Your 30-day action plan</h2>
+            <div className="glass-panel rounded-[2rem] p-6 mb-4 blur-sm select-none pointer-events-none">
+              <h2 className="font-bold text-dark mb-4 font-sans">Your 30-day action plan</h2>
               <ul className="space-y-2">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <li key={i} className="flex gap-3 text-gray-500 text-sm">
-                    <span>📅</span>
+                  <li key={i} className="flex gap-3 text-primary/40 text-sm font-sans">
+                    <ArrowRight className="w-4 h-4 mt-0.5" />
                     <span>Step {i + 1}: Unlock to see your full plan...</span>
                   </li>
                 ))}
@@ -221,23 +229,28 @@ function RoadmapContent() {
             </div>
 
             {/* Unlock CTA */}
-            <div className="bg-white rounded-2xl border-2 border-green-500 shadow-lg p-8 text-center">
-              <div className="text-3xl mb-3">🔓</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
+            <div className="glass-panel rounded-[2rem] border-2 border-accent/30 shadow-xl p-8 text-center">
+              <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                <Lock className="w-7 h-7 text-accent" />
+              </div>
+              <h3 className="text-xl font-bold text-dark mb-2 font-sans">
                 Unlock your full roadmap
               </h3>
-              <p className="text-gray-500 text-sm mb-6">
+              <p className="text-primary/60 text-sm mb-6 font-sans">
                 Get your complete 30-day action plan, 90-day income target, and top 3 free resources.
               </p>
               <div className="flex flex-col items-center gap-3">
-                <div className="text-3xl font-extrabold text-gray-900">$9.99</div>
-                <div className="text-gray-400 text-xs">One-time · Instant access · No subscription</div>
+                <div className="text-4xl font-bold text-dark font-sans">$9<span className="text-lg text-dark/50">.99</span></div>
+                <div className="text-primary/40 text-xs font-mono uppercase tracking-widest">One-time &middot; Instant access &middot; No subscription</div>
                 <button
                   onClick={handleUnlock}
                   disabled={checkingOut}
-                  className="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white font-bold py-4 px-8 rounded-xl text-lg transition-colors shadow"
+                  className="w-full bg-accent hover:bg-dark disabled:opacity-60 text-background font-bold py-4 px-8 rounded-xl text-lg transition-colors shadow-lg font-sans btn relative overflow-hidden"
                 >
-                  {checkingOut ? 'Redirecting to checkout…' : 'Get Full Roadmap — $9.99'}
+                  <span className="relative z-10">
+                    {checkingOut ? 'Redirecting to checkout\u2026' : 'Get Full Roadmap \u2014 $9.99'}
+                  </span>
+                  <span className="hover-layer bg-dark"></span>
                 </button>
               </div>
             </div>
@@ -245,31 +258,31 @@ function RoadmapContent() {
         ) : (
           <div className="space-y-6">
             {/* 30-day plan */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-              <h2 className="font-bold text-gray-900 mb-4">Your 30-day action plan</h2>
+            <div className="glass-panel rounded-[2rem] p-6">
+              <h2 className="font-bold text-dark mb-4 font-sans">Your 30-day action plan</h2>
               <ul className="space-y-3">
                 {full.first30Days.map((step, i) => (
                   <li key={i} className="flex gap-3 text-sm">
-                    <span className="text-green-500 font-bold mt-0.5">→</span>
-                    <span className="text-gray-700">{step}</span>
+                    <ArrowRight className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                    <span className="text-dark/70 font-sans">{step}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* Income target */}
-            <div className="bg-green-600 text-white rounded-2xl p-6">
-              <h2 className="font-bold mb-2">90-day income target</h2>
-              <p className="text-green-100 text-sm">{full.incomeTarget}</p>
+            <div className="bg-primary text-background rounded-[2rem] p-6">
+              <h2 className="font-bold mb-2 font-sans">90-day income target</h2>
+              <p className="text-background/80 text-sm font-sans">{full.incomeTarget}</p>
             </div>
 
             {/* Resources */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-              <h2 className="font-bold text-gray-900 mb-4">Top 3 free resources</h2>
+            <div className="glass-panel rounded-[2rem] p-6">
+              <h2 className="font-bold text-dark mb-4 font-sans">Top 3 free resources</h2>
               <div className="space-y-4">
                 {full.topResources.map((r, i) => (
                   <div key={i} className="flex gap-4">
-                    <div className="w-8 h-8 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
+                    <div className="w-8 h-8 bg-accent/10 text-accent rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 font-mono">
                       {i + 1}
                     </div>
                     <div>
@@ -277,11 +290,11 @@ function RoadmapContent() {
                         href={r.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-semibold text-green-700 hover:underline"
+                        className="font-semibold text-accent hover:text-dark transition-colors font-sans"
                       >
                         {r.name}
                       </a>
-                      <p className="text-gray-500 text-sm">{r.description}</p>
+                      <p className="text-primary/60 text-sm font-sans">{r.description}</p>
                     </div>
                   </div>
                 ))}
@@ -289,21 +302,24 @@ function RoadmapContent() {
             </div>
 
             {/* Share card */}
-            <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-2xl p-6 text-white text-center" id="share-card">
-              <div className="text-2xl mb-2">🚀</div>
-              <p className="font-bold text-lg mb-1">I found my side hustle in 10 minutes</p>
-              <p className="text-green-200 text-sm mb-1">My plan: <strong className="text-white">{preview.hustleName}</strong></p>
-              <p className="text-green-300 text-xs">LaunchPad — AI-powered side hustle roadmaps</p>
+            <div className="bg-dark rounded-[2rem] p-8 text-background text-center relative overflow-hidden" id="share-card">
+              <div className="relative z-10">
+                <Rocket className="w-8 h-8 text-accent mx-auto mb-3" />
+                <p className="font-bold text-lg mb-1 font-sans">I found my side hustle in 10 minutes</p>
+                <p className="text-background/60 text-sm font-sans">My plan: <strong className="text-accent">{preview.hustleName}</strong></p>
+                <p className="text-background/40 text-xs mt-2 font-mono uppercase tracking-widest">LaunchPad &mdash; AI-powered side hustle roadmaps</p>
+              </div>
             </div>
 
             {/* Viral CTA */}
-            <div className="border border-gray-200 rounded-2xl p-6 text-center">
-              <p className="text-gray-500 text-sm mb-3">Know someone who needs this?</p>
+            <div className="border border-primary/10 rounded-[2rem] p-6 text-center">
+              <p className="text-primary/60 text-sm mb-3 font-sans">Know someone who needs this?</p>
               <Link
                 href="/"
-                className="inline-block bg-green-600 text-white font-semibold px-6 py-2 rounded-xl hover:bg-green-700 transition-colors text-sm"
+                className="inline-block bg-accent text-background font-semibold px-6 py-3 rounded-xl hover:bg-dark transition-colors text-sm font-sans btn relative overflow-hidden"
               >
-                Get your own roadmap →
+                <span className="relative z-10">Get your own roadmap &rarr;</span>
+                <span className="hover-layer bg-dark"></span>
               </Link>
             </div>
           </div>
@@ -317,10 +333,10 @@ export default function RoadmapPage() {
   return (
     <Suspense
       fallback={
-        <main className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center">
+        <main className="min-h-screen bg-dark flex items-center justify-center">
           <div className="text-center">
-            <div className="text-5xl mb-4 animate-bounce">🚀</div>
-            <p className="text-gray-500">Loading…</p>
+            <Rocket className="w-10 h-10 text-accent mx-auto mb-4 animate-bounce" />
+            <p className="text-background/60 font-sans">Loading&hellip;</p>
           </div>
         </main>
       }

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import type { InterviewAnswers } from '@/types'
 
 type AnswerKey = keyof InterviewAnswers
@@ -19,25 +20,25 @@ const QUESTIONS: {
     key: 'skills',
     question: "What are your top 3 skills?",
     type: 'text',
-    placeholder: 'e.g. writing, coding, teaching, design, cooking…',
+    placeholder: 'e.g. writing, coding, teaching, design, cooking\u2026',
   },
   {
     key: 'hoursPerWeek',
     question: "How many hours per week can you dedicate to a side hustle?",
     type: 'radio',
-    options: ['< 5 hours', '5–10 hours', '10–20 hours', '20+ hours'],
+    options: ['< 5 hours', '5\u201310 hours', '10\u201320 hours', '20+ hours'],
   },
   {
     key: 'incomeGoal',
-    question: "What's your income goal in the next 90 days?",
+    question: "What\u2019s your income goal in the next 90 days?",
     type: 'radio',
-    options: ['< $500', '$500–$2,000', '$2,000–$5,000', '$5,000+'],
+    options: ['< $500', '$500\u2013$2,000', '$2,000\u2013$5,000', '$5,000+'],
   },
   {
     key: 'contentComfort',
     question: "How comfortable are you creating content (writing, video, social)?",
     type: 'radio',
-    options: ['1 — Not at all', '2 — A little', '3 — Somewhat', '4 — Quite comfortable', '5 — Love it'],
+    options: ['1 \u2014 Not at all', '2 \u2014 A little', '3 \u2014 Somewhat', '4 \u2014 Quite comfortable', '5 \u2014 Love it'],
   },
   {
     key: 'workStyle',
@@ -55,22 +56,22 @@ const QUESTIONS: {
     key: 'audience',
     question: "Do you already have an online audience or followers?",
     type: 'radio',
-    options: ['None yet', 'Under 1,000', '1,000–10,000', '10,000+'],
+    options: ['None yet', 'Under 1,000', '1,000\u201310,000', '10,000+'],
   },
   {
     key: 'passion',
     question: "What industry or topic are you most passionate about?",
     type: 'text',
-    placeholder: 'e.g. fitness, personal finance, travel, cooking, gaming…',
+    placeholder: 'e.g. fitness, personal finance, travel, cooking, gaming\u2026',
   },
   {
     key: 'riskTolerance',
-    question: "What's your risk tolerance?",
+    question: "What\u2019s your risk tolerance?",
     type: 'radio',
     options: [
-      'Low — I need income fast',
-      'Medium — I can invest a few months',
-      'High — I\'m playing the long game',
+      'Low \u2014 I need income fast',
+      'Medium \u2014 I can invest a few months',
+      'High \u2014 I\'m playing the long game',
     ],
   },
   {
@@ -135,21 +136,21 @@ export default function InterviewPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-50 to-white flex flex-col">
+    <main className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <div className="px-6 py-5 border-b border-gray-100 bg-white">
+      <div className="px-6 py-5 border-b border-primary/10 bg-background/80 backdrop-blur-md">
         <div className="max-w-xl mx-auto flex items-center gap-4">
-          <span className="text-lg font-bold text-gray-900">
-            Launch<span className="text-green-600">Pad</span>
-          </span>
+          <Link href="/" className="text-lg font-bold text-dark tracking-tighter font-sans">
+            LaunchPad
+          </Link>
           <div className="flex-1">
-            <div className="flex justify-between text-xs text-gray-400 mb-1">
+            <div className="flex justify-between text-xs text-primary/50 mb-1 font-mono">
               <span>Step {step + 1} of {TOTAL}</span>
               <span>{Math.round((step / TOTAL) * 100)}% complete</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-1.5">
+            <div className="w-full bg-primary/10 rounded-full h-1.5">
               <div
-                className="bg-green-500 h-1.5 rounded-full transition-all duration-300"
+                className="bg-accent h-1.5 rounded-full transition-all duration-500 ease-in-out"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -160,10 +161,10 @@ export default function InterviewPage() {
       {/* Question */}
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="max-w-xl w-full">
-          <div className="text-sm font-semibold text-green-600 mb-3">
+          <div className="text-sm font-semibold text-accent mb-3 font-mono uppercase tracking-widest">
             Question {step + 1} of {TOTAL}
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">{q.question}</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-dark mb-8 font-sans">{q.question}</h2>
 
           {(q.type === 'text' || q.type === 'email') && (
             <input
@@ -171,7 +172,8 @@ export default function InterviewPage() {
               value={current}
               onChange={(e) => handleSelect(e.target.value)}
               placeholder={q.placeholder}
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 text-base focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full border border-primary/20 rounded-2rem bg-white/50 backdrop-blur-md px-5 py-4 text-dark text-base font-sans focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all placeholder:text-primary/40"
+              style={{ borderRadius: '1rem' }}
               onKeyDown={(e) => e.key === 'Enter' && handleNext()}
             />
           )}
@@ -182,10 +184,10 @@ export default function InterviewPage() {
                 <button
                   key={opt}
                   onClick={() => handleSelect(opt)}
-                  className={`w-full text-left px-5 py-4 rounded-xl border-2 font-medium transition-all ${
+                  className={`w-full text-left px-5 py-4 rounded-xl border-2 font-medium font-sans transition-all duration-300 ${
                     current === opt
-                      ? 'border-green-500 bg-green-50 text-green-800'
-                      : 'border-gray-200 bg-white text-gray-700 hover:border-green-300'
+                      ? 'border-accent bg-accent/10 text-dark shadow-md'
+                      : 'border-primary/10 bg-white/50 text-dark/70 hover:border-accent/30 hover:bg-white/80'
                   }`}
                 >
                   {opt}
@@ -194,28 +196,31 @@ export default function InterviewPage() {
             </div>
           )}
 
-          {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+          {error && <p className="mt-3 text-sm text-accent font-sans">{error}</p>}
 
           {/* Nav */}
           <div className="flex gap-3 mt-8">
             {step > 0 && (
               <button
                 onClick={handleBack}
-                className="px-6 py-3 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                className="px-6 py-3 rounded-xl border border-primary/20 text-primary font-medium font-sans hover:bg-primary/5 transition-colors"
               >
-                ← Back
+                &larr; Back
               </button>
             )}
             <button
               onClick={handleNext}
               disabled={loading}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition-colors disabled:opacity-50"
+              className="flex-1 bg-accent hover:bg-dark text-background font-bold py-3 px-6 rounded-xl transition-colors disabled:opacity-50 font-sans btn relative overflow-hidden"
             >
-              {loading
-                ? 'Generating your roadmap…'
-                : step === TOTAL - 1
-                ? 'Generate My Roadmap →'
-                : 'Next →'}
+              <span className="relative z-10">
+                {loading
+                  ? 'Generating your roadmap\u2026'
+                  : step === TOTAL - 1
+                  ? 'Generate My Roadmap \u2192'
+                  : 'Next \u2192'}
+              </span>
+              <span className="hover-layer bg-dark"></span>
             </button>
           </div>
         </div>
