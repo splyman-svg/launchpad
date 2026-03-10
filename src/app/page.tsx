@@ -64,6 +64,7 @@ function Navbar() {
       <nav className="hidden md:flex gap-8 items-center font-sans font-semibold text-sm tracking-wide">
         <a href="#how-it-works" className="hover:text-accent transition-colors">See how it works</a>
         <a href="#pricing" className="hover:text-accent transition-colors">Pricing</a>
+        <Link href="/login" className="hover:text-accent transition-colors">Log in</Link>
       </nav>
       <Link href="/interview" className="bg-accent hover:bg-dark text-background px-6 py-2.5 rounded-full font-sans font-semibold text-sm shadow-md transition-colors btn">
         <span className="relative z-10">Find My Side Hustle</span>
