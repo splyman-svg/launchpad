@@ -1,13 +1,6 @@
-import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest, NextResponse } from 'next/server'
+import { getAnthropicClient } from '@/lib/anthropic'
 import type { InterviewAnswers, RoadmapResponse } from '@/types'
-
-function getClient() {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    throw new Error('ANTHROPIC_API_KEY is not configured')
-  }
-  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-}
 
 function buildPrompt(answers: InterviewAnswers): string {
   return `You are a side hustle coach. Based on the following interview answers, generate a personalized side hustle roadmap as valid JSON only — no markdown, no explanation, just the JSON object.
@@ -64,7 +57,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    const client = getClient()
+    const client = getAnthropicClient()
     const message = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 2048,

@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 
 export default async function DashboardLayout({
   children,
@@ -11,17 +11,6 @@ export default async function DashboardLayout({
 
   if (!user) {
     redirect('/login?redirect=/dashboard')
-  }
-
-  // Check if user is Pro
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('tier')
-    .eq('id', user.id)
-    .single()
-
-  if (!profile || profile.tier !== 'pro') {
-    redirect('/upgrade')
   }
 
   return <>{children}</>

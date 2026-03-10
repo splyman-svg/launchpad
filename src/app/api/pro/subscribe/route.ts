@@ -1,15 +1,6 @@
-import Stripe from 'stripe'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-
-function getStripe() {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error('STRIPE_SECRET_KEY is not configured')
-  }
-  return new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2026-02-25.clover',
-  })
-}
+import { getStripe } from '@/lib/stripe'
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,19 +11,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
-    const { roadmapId } = await req.json()
     const stripe = getStripe()
     const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
 
-    // Check if user already has a Stripe customer ID
-    const { data: profile } = await supabase
+    // Ensure profile exists (may not if user came straight from auth)
+    const { data: existingProfile } = await supabase
       .from('profiles')
       .select('stripe_customer_id')
       .eq('id', user.id)
       .single()
 
-    let customerId = profile?.stripe_customer_id
+    if (!existingProfile) {
+      await supabase.from('profiles').insert({
+        id: user.id,
+        email: user.email,
+        tier: 'free',
+      })
+    }
 
+    let customerId = existingProfile?.stripe_customer_id
+
+    // Create Stripe customer if needed
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: user.email,
@@ -46,29 +45,32 @@ export async function POST(req: NextRequest) {
         .eq('id', user.id)
     }
 
-    // Create or get the Pro subscription price
-    const priceId = process.env.STRIPE_PRO_PRICE_ID
-
+    // Create subscription checkout session
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       line_items: [
         {
-          price: priceId,
+          price: process.env.STRIPE_PRO_PRICE_ID!.trim(),
           quantity: 1,
         },
       ],
       mode: 'subscription',
+      success_url: `${origin}/dashboard?upgraded=true`,
+      cancel_url: `${origin}/upgrade?canceled=true`,
       metadata: {
         supabase_user_id: user.id,
-        roadmap_id: roadmapId || '',
       },
-      success_url: `${origin}/dashboard?subscribed=true`,
-      cancel_url: `${origin}/upgrade`,
+      subscription_data: {
+        metadata: {
+          supabase_user_id: user.id,
+        },
+      },
     })
 
     return NextResponse.json({ url: session.url })
-  } catch (err) {
-    console.error('Pro subscription error:', err)
-    return NextResponse.json({ error: 'Failed to create subscription' }, { status: 500 })
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Unknown error'
+    console.error('Stripe subscribe error:', message, err)
+    return NextResponse.json({ error: `Checkout failed: ${message}` }, { status: 500 })
   }
 }

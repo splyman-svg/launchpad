@@ -1,18 +1,28 @@
-import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest, NextResponse } from 'next/server'
-import { createAdminClient } from '@/lib/supabase/server'
+import { createAdminClient, createClient } from '@/lib/supabase/server'
+import { getAnthropicClient } from '@/lib/anthropic'
 import type { TaskGenerationResponse } from '@/types'
 
-function getClient() {
-  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
-}
+// Allow up to 60 seconds for Claude to generate 30 days of tasks
+export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId, roadmapId } = await req.json()
+    const { userId: bodyUserId, roadmapId } = await req.json()
 
-    if (!userId || !roadmapId) {
-      return NextResponse.json({ error: 'Missing userId or roadmapId' }, { status: 400 })
+    if (!roadmapId) {
+      return NextResponse.json({ error: 'Missing roadmapId' }, { status: 400 })
+    }
+
+    // Resolve userId: use body value, or fall back to authenticated user
+    let userId = bodyUserId
+    if (!userId || userId === '_self') {
+      const authClient = createClient()
+      const { data: { user } } = await authClient.auth.getUser()
+      if (!user) {
+        return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+      }
+      userId = user.id
     }
 
     const supabase = createAdminClient()
@@ -42,10 +52,10 @@ export async function POST(req: NextRequest) {
     const answers = roadmap.answers
     const fullPlan = roadmap.full_plan
 
-    const claude = getClient()
+    const claude = getAnthropicClient()
     const message = await claude.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 4096,
+      max_tokens: 8192,
       messages: [
         {
           role: 'user',
@@ -97,7 +107,8 @@ Return ONLY valid JSON, no markdown:
 
     return NextResponse.json({ message: 'Tasks generated', count: tasksToInsert.length })
   } catch (err) {
-    console.error('Task generation error:', err)
-    return NextResponse.json({ error: 'Failed to generate tasks' }, { status: 500 })
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('Task generation error:', message, err)
+    return NextResponse.json({ error: 'Failed to generate tasks', detail: message }, { status: 500 })
   }
 }

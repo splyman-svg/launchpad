@@ -18,7 +18,9 @@ function RoadmapContent() {
   const [state, setState] = useState<State>('loading')
   const [roadmap, setRoadmap] = useState<RoadmapResponse | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
+  const [isPro, setIsPro] = useState(false)
   const fetched = useRef(false)
+  const savedToDb = useRef(false)
 
   useEffect(() => {
     if (fetched.current) return
@@ -83,6 +85,38 @@ function RoadmapContent() {
         setState('error')
       })
   }, [params, router])
+
+  // Check auth status and auto-save roadmap if user is Pro
+  useEffect(() => {
+    if (state !== 'ready' || !roadmap || savedToDb.current) return
+    savedToDb.current = true
+
+    // Check if user is authenticated and Pro — save roadmap to DB
+    fetch('/api/pro/progress')
+      .then(res => {
+        if (res.ok) {
+          setIsPro(true)
+          // If they already have a roadmap in DB, don't overwrite
+          return
+        }
+        // No roadmap in DB yet — try to save it
+        const answersJson = sessionStorage.getItem(ANSWERS_KEY)
+        if (!answersJson) return
+        const answers = JSON.parse(answersJson)
+        return fetch('/api/pro/roadmap/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            answers,
+            preview: roadmap.preview,
+            full_plan: roadmap.full,
+          }),
+        }).then(saveRes => {
+          if (saveRes.ok) setIsPro(true)
+        })
+      })
+      .catch(() => { /* Not authenticated — that's fine */ })
+  }, [state, roadmap])
 
   if (state === 'loading') {
     return (
@@ -226,44 +260,67 @@ function RoadmapContent() {
             </div>
           </div>
 
-          {/* Go Pro CTA */}
-          <div className="bg-accent/5 border-2 border-accent/30 rounded-[2rem] p-8 relative overflow-hidden">
-            <div className="text-center">
-              <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
-                <Sparkles className="w-7 h-7 text-accent" />
+          {/* CTA — Dashboard for Pro, Upgrade for free */}
+          {isPro ? (
+            <div className="bg-accent/5 border-2 border-accent/30 rounded-[2rem] p-8 relative overflow-hidden">
+              <div className="text-center">
+                <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                  <Rocket className="w-7 h-7 text-accent" />
+                </div>
+                <h3 className="text-2xl font-bold text-dark mb-2 font-sans">
+                  Your dashboard is <span className="text-accent font-drama italic">ready</span>
+                </h3>
+                <p className="text-primary/60 font-sans mb-6 max-w-md mx-auto">
+                  Your 30-day plan has been saved. Head to your dashboard to start checking off daily tasks with your AI coach.
+                </p>
+                <Link
+                  href="/dashboard"
+                  className="inline-block bg-accent hover:bg-dark text-background font-bold py-4 px-10 rounded-xl text-lg transition-colors font-sans btn relative overflow-hidden"
+                >
+                  <span className="relative z-10">Go to Dashboard &rarr;</span>
+                  <span className="hover-layer bg-dark"></span>
+                </Link>
               </div>
-              <h3 className="text-2xl font-bold text-dark mb-2 font-sans">
-                Ready to <span className="text-accent font-drama italic">actually</span> do this?
-              </h3>
-              <p className="text-primary/60 font-sans mb-6 max-w-md mx-auto">
-                You&apos;ve got the plan. Now get an AI coach to walk you through it &mdash; daily tasks, progress tracking, and accountability for 30 days.
-              </p>
-
-              <div className="flex flex-wrap justify-center gap-4 mb-6 text-sm">
-                <div className="flex items-center gap-2 text-dark/60 font-sans">
-                  <Target className="w-4 h-4 text-accent" />
-                  Daily tasks
-                </div>
-                <div className="flex items-center gap-2 text-dark/60 font-sans">
-                  <MessageCircle className="w-4 h-4 text-accent" />
-                  AI coach chat
-                </div>
-                <div className="flex items-center gap-2 text-dark/60 font-sans">
-                  <Rocket className="w-4 h-4 text-accent" />
-                  Progress tracking
-                </div>
-              </div>
-
-              <Link
-                href="/upgrade"
-                className="inline-block bg-accent hover:bg-dark text-background font-bold py-4 px-10 rounded-xl text-lg transition-colors font-sans btn relative overflow-hidden"
-              >
-                <span className="relative z-10">Go Pro &mdash; $29/mo</span>
-                <span className="hover-layer bg-dark"></span>
-              </Link>
-              <p className="text-primary/40 text-xs font-sans mt-3">Cancel anytime. No commitment.</p>
             </div>
-          </div>
+          ) : (
+            <div className="bg-accent/5 border-2 border-accent/30 rounded-[2rem] p-8 relative overflow-hidden">
+              <div className="text-center">
+                <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                  <Sparkles className="w-7 h-7 text-accent" />
+                </div>
+                <h3 className="text-2xl font-bold text-dark mb-2 font-sans">
+                  Ready to <span className="text-accent font-drama italic">actually</span> do this?
+                </h3>
+                <p className="text-primary/60 font-sans mb-6 max-w-md mx-auto">
+                  You&apos;ve got the plan. Now get an AI coach to walk you through it &mdash; daily tasks, progress tracking, and accountability for 30 days.
+                </p>
+
+                <div className="flex flex-wrap justify-center gap-4 mb-6 text-sm">
+                  <div className="flex items-center gap-2 text-dark/60 font-sans">
+                    <Target className="w-4 h-4 text-accent" />
+                    Daily tasks
+                  </div>
+                  <div className="flex items-center gap-2 text-dark/60 font-sans">
+                    <MessageCircle className="w-4 h-4 text-accent" />
+                    AI coach chat
+                  </div>
+                  <div className="flex items-center gap-2 text-dark/60 font-sans">
+                    <Rocket className="w-4 h-4 text-accent" />
+                    Progress tracking
+                  </div>
+                </div>
+
+                <Link
+                  href="/upgrade"
+                  className="inline-block bg-accent hover:bg-dark text-background font-bold py-4 px-10 rounded-xl text-lg transition-colors font-sans btn relative overflow-hidden"
+                >
+                  <span className="relative z-10">Go Pro &mdash; $29/mo</span>
+                  <span className="hover-layer bg-dark"></span>
+                </Link>
+                <p className="text-primary/40 text-xs font-sans mt-3">Cancel anytime. No commitment.</p>
+              </div>
+            </div>
+          )}
 
           {/* Share card */}
           <div className="bg-dark rounded-[2rem] p-8 text-background text-center relative overflow-hidden" id="share-card">

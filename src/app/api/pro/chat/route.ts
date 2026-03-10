@@ -1,10 +1,8 @@
-import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { getAnthropicClient } from '@/lib/anthropic'
 
-function getClient() {
-  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
-}
+export const maxDuration = 30
 
 export async function POST(req: NextRequest) {
   try {
@@ -146,7 +144,7 @@ Make them feel SEEN and HEARD. This is the conversation that turns a subscriber 
     })
 
     // Call Claude
-    const claude = getClient()
+    const claude = getAnthropicClient()
     const response = await claude.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: isFirstMessage ? 2048 : 1024,

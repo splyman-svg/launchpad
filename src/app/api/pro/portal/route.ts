@@ -1,6 +1,6 @@
-import Stripe from 'stripe'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { getStripe } from '@/lib/stripe'
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,21 +18,18 @@ export async function POST(req: NextRequest) {
       .single()
 
     if (!profile?.stripe_customer_id) {
-      return NextResponse.json({ error: 'No subscription found' }, { status: 404 })
+      return NextResponse.json({ error: 'No subscription found' }, { status: 400 })
     }
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-      apiVersion: '2026-02-25.clover',
-    })
-
+    const stripe = getStripe()
     const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
 
-    const session = await stripe.billingPortal.sessions.create({
+    const portalSession = await stripe.billingPortal.sessions.create({
       customer: profile.stripe_customer_id,
       return_url: `${origin}/dashboard`,
     })
 
-    return NextResponse.json({ url: session.url })
+    return NextResponse.json({ url: portalSession.url })
   } catch (err) {
     console.error('Portal error:', err)
     return NextResponse.json({ error: 'Failed to create portal session' }, { status: 500 })

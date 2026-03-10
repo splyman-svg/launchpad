@@ -1,14 +1,5 @@
-import Stripe from 'stripe'
 import { NextRequest, NextResponse } from 'next/server'
-
-function getStripe() {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error('STRIPE_SECRET_KEY is not configured')
-  }
-  return new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2026-02-25.clover',
-  })
-}
+import { getStripe } from '@/lib/stripe'
 
 export async function POST(req: NextRequest) {
   try {

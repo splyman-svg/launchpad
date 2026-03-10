@@ -1,8 +1,54 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { CheckCircle2, Circle, Sparkles } from 'lucide-react'
 import type { Task } from '@/types'
+
+function ConfettiParticles() {
+  const colors = ['#C84B31', '#2D3436', '#E8A87C', '#D4A574', '#85CDCA', '#F5E6CC']
+  const particles = Array.from({ length: 50 }, (_, i) => ({
+    id: i,
+    color: colors[i % colors.length],
+    left: Math.random() * 100,
+    delay: Math.random() * 0.5,
+    duration: 1.5 + Math.random() * 1.5,
+    size: 4 + Math.random() * 6,
+    rotation: Math.random() * 360,
+  }))
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
+      {particles.map(p => (
+        <div
+          key={p.id}
+          className="absolute animate-confetti-fall"
+          style={{
+            left: `${p.left}%`,
+            top: '-10px',
+            width: `${p.size}px`,
+            height: `${p.size * 0.6}px`,
+            backgroundColor: p.color,
+            borderRadius: '2px',
+            transform: `rotate(${p.rotation}deg)`,
+            animationDelay: `${p.delay}s`,
+            animationDuration: `${p.duration}s`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        @keyframes confetti-fall {
+          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
+        }
+        .animate-confetti-fall {
+          animation-name: confetti-fall;
+          animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          animation-fill-mode: forwards;
+        }
+      `}</style>
+    </div>
+  )
+}
 
 interface TaskListProps {
   tasks: Task[]
@@ -12,21 +58,21 @@ interface TaskListProps {
 
 export default function TaskList({ tasks, onToggle, dayNumber }: TaskListProps) {
   const [celebrating, setCelebrating] = useState(false)
+  const prevAllComplete = useRef(false)
   const allComplete = tasks.length > 0 && tasks.every(t => t.completed)
   const completedCount = tasks.filter(t => t.completed).length
 
-  async function handleToggle(taskId: string, currentCompleted: boolean) {
-    const newCompleted = !currentCompleted
-    onToggle(taskId, newCompleted)
-
-    // Check if all tasks are now complete
-    const wouldBeComplete = tasks.every(t =>
-      t.id === taskId ? newCompleted : t.completed
-    )
-    if (wouldBeComplete && !allComplete) {
+  // Trigger confetti when transitioning from incomplete to complete
+  useEffect(() => {
+    if (allComplete && !prevAllComplete.current && tasks.length > 0) {
       setCelebrating(true)
       setTimeout(() => setCelebrating(false), 3000)
     }
+    prevAllComplete.current = allComplete
+  }, [allComplete, tasks.length])
+
+  function handleToggle(taskId: string, currentCompleted: boolean) {
+    onToggle(taskId, !currentCompleted)
   }
 
   if (tasks.length === 0) {
@@ -40,12 +86,13 @@ export default function TaskList({ tasks, onToggle, dayNumber }: TaskListProps) 
 
   return (
     <div className="glass-panel rounded-2xl p-6 relative overflow-hidden">
-      {/* Celebration overlay */}
+      {/* Confetti + Celebration overlay */}
+      {celebrating && <ConfettiParticles />}
       {celebrating && (
-        <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center bg-accent/5 animate-pulse">
+        <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center bg-accent/5">
           <div className="text-center">
             <Sparkles className="w-12 h-12 text-accent mx-auto mb-2 animate-bounce" />
-            <p className="text-xl font-bold text-accent font-sans">All tasks done! 🎉</p>
+            <p className="text-xl font-bold text-accent font-sans">All tasks done!</p>
             <p className="text-sm text-dark/60 font-sans">You&apos;re crushing it!</p>
           </div>
         </div>
